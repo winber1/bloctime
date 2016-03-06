@@ -22,7 +22,9 @@
     "file-loader": "^0.8.5"
   },
   "dependencies": {
+    "history": "^1.13.1",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-router": "^1.0.1"
   }
 }
