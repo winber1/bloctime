@@ -12,6 +12,3 @@ module.exports = (
     <IndexRoute component={Home} />
   </Route>
 );
-
-
-

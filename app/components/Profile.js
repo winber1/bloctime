@@ -3,10 +3,11 @@ var Router = require('react-router');
 var Repos = require('./Github/Repos');
 var UserProfile = require('./Github/UserProfile');
 var Notes = require('./Notes/Notes');
+var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
-var Profile = React.createClass({
+var Main = React.createClass({
 
     mixins: [ReactFireMixin],
 
@@ -64,9 +65,13 @@ var Profile = React.createClass({
                   notes={this.state.notes}
                   addNote={this.handleAddNote} />
              </div>
+
+             <div className='col-md-4'>
+                <Timer />
+             </div>
            </div>
         )
    }
 });
 
-module.exports = Profile;
+module.exports = Main;

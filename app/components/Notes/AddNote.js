@@ -20,18 +20,13 @@ var AddNote = React.createClass({
     return (
       <div className="input-group">
         <form onSubmit={ this.handleSubmit }>
-        <input type="text" className="form-control"
-                onChange={ this.onChange } placeholder="Add New Note" ref={this.setRef}/>
-          <button className="btn btn-default" type="button"
+            <input type="text" className="form-control"
+                onChange={ this.onChange }
+                placeholder="Add New Note" ref={this.setRef}/>
+            <button type="button" className="btn"
                 onClick={this.handleSubmit}>Submit</button>
         </form>
       </div>
-/*
-      <form onSubmit={ this.handleSubmit }>
-      <input onChange={ this.onChange } value={ this.state.text } />
-      <button>{ 'Add #' + (this.state.notes.length + 1) }</button>
-      </form>
-      */
     )
   }
 });
