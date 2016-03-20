@@ -21,9 +21,10 @@ var Profile = React.createClass({
     },
     // called bfr component mounts
     componentWillMount: function(){
-      this.ref = new Firebase('https://bloctime-winber1.firebaseio.com/');
+      this.ref = new Firebase('https://bloctime-v2.firebaseIO.com');
       var childRef = this.ref.child(this.props.params.username);
-      this.bindAsArray(childRef, 'notes');
+      //this.bindAsArray(childRef, 'notes');
+      this.bindAsArray(this.ref, 'notes');
     },
 
     componentWillUnmount: function(){
@@ -39,10 +40,12 @@ var Profile = React.createClass({
       var idx = this.state.notes.length - 1;
       var text = this.state.text;
       console.log("text:", this.state.text);
-      this.ref.child(this.props.params.username).push({
-          '$id':this.state.text
-        });
+      this.ref.child(this.state.notes.length).set(this.state.text);
       this.setState({ text: "" });
+    },
+
+    handleAddNote: function(newNote){
+        this.ref.child(this.state.notes.length).set(newNote);
     },
 
     render: function(){
@@ -56,13 +59,10 @@ var Profile = React.createClass({
              </div>
 
              <div className='col-md-4'>
-               <UserProfile username={this.props.params.username} bio={this.state.bio} />
-             </div>
-             <div className='col-md-4'>
-               <Repos username={this.props.params.username} repos={this.state.repos} />
-             </div>
-             <div className='col-md-4'>
-               <Notes username={this.props.params.username} notes={this.state.notes} />
+               <Notes
+                  username={this.props.params.username}
+                  notes={this.state.notes}
+                  addNote={this.handleAddNote} />
              </div>
            </div>
         )
