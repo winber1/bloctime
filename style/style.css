@@ -1,0 +1,10 @@
+.overflowHidden
+{ overflow: hidden;
+  padding-right: .5em; }
+
+.inline{
+
+  display:inline;
+}
+.floatRight
+{float: right;}
