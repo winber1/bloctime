@@ -17,7 +17,8 @@ var Main = React.createClass({
             bio: {
                 name:'winnie e'
             },
-            repos: ['a','b','c']
+            repos: ['a','b','c'],
+            timeLeft: 5
       }
     },
     // called bfr component mounts
@@ -30,6 +31,7 @@ var Main = React.createClass({
 
     componentWillUnmount: function(){
       this.unbind('notes');
+      clearInterval(this.timer);  //??always or just when set??
     },
 
     onChange: function(e) {
@@ -47,6 +49,18 @@ var Main = React.createClass({
 
     handleAddNote: function(newNote){
         this.ref.child(this.state.notes.length).set(newNote);
+    },
+
+    handleTime: function(newNote){
+        // manage time based on button click
+        // run tick function every second
+        this.timer = setInterval(this.tick, 1000);
+    },
+    tick: function(){
+        if(this.state.timeLeft > 0)
+        { this.setState({timeLeft: this.state.timeLeft-1} ); }
+        else
+        { clearInterval(this.timer); }
     },
 
     render: function(){
@@ -67,7 +81,9 @@ var Main = React.createClass({
              </div>
 
              <div className='col-md-4'>
-                <Timer />
+                <Timer
+                  timeLeft={this.state.timeLeft}
+                  handleTime={this.handleTime} />
              </div>
            </div>
         )
