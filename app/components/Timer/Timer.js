@@ -23,7 +23,7 @@ var Timer = React.createClass({
   },
 
   render: function(){
-console.log("Timer.render beg - timeLeft:", this.props.timeDisplay);
+    // console.log("Timer.render beg - timeLeft:", this.props.timeDisplay);
     return(
         <div>
             <h3>Timer:</h3>

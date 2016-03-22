@@ -7,8 +7,8 @@ var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
-const WORKTIME = 2*60;  // sb 25 minutes
-const BREAKTIME = 1*60;  // sb 5 minutes
+const WORKTIME = 10;  // sb 25 minutes
+const BREAKTIME = 4;  // sb 5 minutes
 
 var Main = React.createClass({
 
@@ -77,22 +77,25 @@ var Main = React.createClass({
 
             this.tick();
         }
-//console.log("handleTime end - timeLeft:", this.state.timeLeft);
+        //console.log("handleTime end - timeLeft:", this.state.timeLeft);
     },
 
     // seconds countdown and display
-    tick: function(){
-//console.log("tick beg - timeLeft:", this.state.timeLeft);
+    tick: function()
+    {
+        //console.log("tick beg - timeLeft:", this.state.timeLeft);
+
+        // seconds countdown
         if(this.state.timeLeft >= 0)
         {
           var t = this.state.timeLeft;
           this.setState({timeLeft: t-1} );
           this.setState({timeDisplay: this.timeFormat(t)});
         }
+        // out of seconds - (re)set onBreak and display
         else
         {
-            document.getElementById("myButton").childNodes[0].nodeValue = "Start";
-
+            // toggle onBreak; set time interval
             if(this.state.onBreak)
             {
                 this.setState({timeLeft: WORKTIME} );
@@ -103,11 +106,14 @@ var Main = React.createClass({
                 this.setState({timeLeft: BREAKTIME} );
                 this.setState({onBreak: true} );
             }
+
+            // set display props
+            document.getElementById("myButton").childNodes[0].nodeValue = "Start";
             this.setState({timeDisplay: this.timeFormat(this.state.timeLeft)});
 
             clearInterval(this.timer);
         }
-//console.log("tick end - timeLeft:", this.state.timeLeft);
+        //console.log("tick end - timeLeft:", this.state.timeLeft);
     },
 
     timeFormat: function(t){
@@ -125,7 +131,7 @@ var Main = React.createClass({
     },
 
     render: function(){
-console.log("render beg - timeLeft:", this.state.timeLeft);
+       console.log("render beg - timeLeft:", this.state.timeLeft);
        return(
            <div className='row'>
 
