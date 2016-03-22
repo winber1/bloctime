@@ -18,7 +18,8 @@ var Main = React.createClass({
                 name:'winnie e'
             },
             repos: ['a','b','c'],
-            timeLeft: 5
+            timeLeft: 5,
+            timeDisplay:'5'
       }
     },
     // called bfr component mounts
@@ -51,14 +52,26 @@ var Main = React.createClass({
         this.ref.child(this.state.notes.length).set(newNote);
     },
 
-    handleTime: function(newNote){
+    handleTime: function(){
         // manage time based on button click
         // run tick function every second
         this.timer = setInterval(this.tick, 1000);
     },
     tick: function(){
         if(this.state.timeLeft > 0)
-        { this.setState({timeLeft: this.state.timeLeft-1} ); }
+        {
+
+          var t = this.state.timeLeft-1;
+
+          var m = Math.round(t/60);
+          if(m < 10){ m = "0" + m; }
+          var s = t%60;
+          if(s < 10){ s = "0" + s; }
+
+          var tString = m + ':' + s;
+          this.setState({timeLeft: t} );
+          this.setState({timeDisplay: tString});
+        }
         else
         { clearInterval(this.timer); }
     },
@@ -82,7 +95,7 @@ var Main = React.createClass({
 
              <div className='col-md-4'>
                 <Timer
-                  timeLeft={this.state.timeLeft}
+                  timeDisplay={this.state.timeDisplay}
                   handleTime={this.handleTime} />
              </div>
            </div>
