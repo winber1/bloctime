@@ -7,7 +7,7 @@ var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
-const TIMELEFT = 25;
+const TIMELEFT = 3*60;  // sb 25 minutes
 
 var Main = React.createClass({
 
@@ -16,17 +16,16 @@ var Main = React.createClass({
     getInitialState: function(){
       return{
             timeLeft: TIMELEFT,
-            timeDisplay:TIMELEFT.toString()
+            timeDisplay: this.timeFormat(TIMELEFT)
       }
     },
     // called bfr component mounts
     componentWillMount: function(){
       this.ref = new Firebase('https://bloctime-v2.firebaseIO.com');
       var childRef = this.ref.child(this.props.params.username);
-      //this.bindAsArray(childRef, 'notes');
       this.bindAsArray(this.ref, 'notes');
 
-      console.log("timeLeft in WillMount:", this.state.timeLeft);
+      //console.log("timeLeft in WillMount:", this.state.timeLeft);
     },
 
     componentWillUnmount: function(){
@@ -59,61 +58,65 @@ var Main = React.createClass({
         else
         {
             clearInterval(this.timer);
-            this.setState({timeLeft: 25});
+            this.setState({timeLeft: TIMELEFT});
 console.log("timeLeft in handleTime - bfr timeout:", this.state.timeLeft);
 
-var t=25;
-this.setState({timeLeft: t} );
-this.state.timeLeft = 25;
+            this.state.timeLeft = TIMELEFT;  //??why??
 
-setTimeout(function() { var x=1 }, 100000);
-this.setState({timeLeft: 25});
-              console.log("timeLeft in handleTime:", this.state.timeLeft);
+//setTimeout(function() { var x=1 }, 100000);
+//console.log("timeLeft in handleTime:", this.state.timeLeft);
+
             this.tick();
         }
     },
+
     tick: function(){
-        if(this.state.timeLeft > 0)
+        if(this.state.timeLeft >= 0)
         {
-
           var t = this.state.timeLeft;
-
-          var m = Math.round(t/60);
-          if(m < 10){ m = "0" + m; }
-          var s = t%60;
-          if(s < 10){ s = "0" + s; }
-
-          var tString = m + ':' + s;
           this.setState({timeLeft: t-1} );
-          this.setState({timeDisplay: tString});
+          this.setState({timeDisplay: this.timeFormat(t)});
         }
         else
         { clearInterval(this.timer); }
     },
 
+    timeFormat: function(t){
+        var s = t%60;
+        if(s == 0 && (t != TIMELEFT) && (t != 0) )
+        {
+            t -= 60;
+            s = 59;
+        }
+        if(s < 10){ s = "0" + s; }
+        var m = Math.floor(t/60);
+        if(m < 10){ m = "0" + m; }
 
+        return( m + ':' + s );
+    },
 
     render: function(){
        return(
            <div className='row'>
-             <div className='col-md-4'>
-                <form onSubmit={ this.handleSubmit }>
-                <input onChange={ this.onChange } value={ this.state.text } />
-                <button>{ 'Add #' + (this.state.notes.length + 1) }</button>
-                </form>
+
+             <div className='row'>
+                <Timer
+                  timeDisplay={this.state.timeDisplay}
+                  handleTime={this.handleTime} />
              </div>
 
-             <div className='col-md-4'>
+             <div className='row'>
                <Notes
                   username={this.props.params.username}
                   notes={this.state.notes}
                   addNote={this.handleAddNote} />
              </div>
 
-             <div className='col-md-4'>
-                <Timer
-                  timeDisplay={this.state.timeDisplay}
-                  handleTime={this.handleTime} />
+             <div className='row hideMe'>
+                <form onSubmit={ this.handleSubmit }>
+                <input onChange={ this.onChange } value={ this.state.text } />
+                <button>{ 'Add #' + (this.state.notes.length + 1) }</button>
+                </form>
              </div>
            </div>
         )

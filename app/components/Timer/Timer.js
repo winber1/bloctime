@@ -10,13 +10,14 @@ var Timer = React.createClass({
   handleSubmit: function(e){
     // manage button text
     // button could be Start, Reset, Break
-    var myLabel = document.getElementById("myButton").childNodes[0].nodeValue;
+    var myNode = document.getElementById("myButton").childNodes[0];
+    var myLabel = myNode.nodeValue;
     console.log("myLabel:", myLabel);
 
     if(myLabel == "Start")
-    {
-        document.getElementById("myButton").childNodes[0].nodeValue = "Reset";
-    }
+    { myNode.nodeValue = "Reset"; }
+    else
+    { myNode.nodeValue = "Start"; }
 
     //manage time
     this.props.handleTime(myLabel);
@@ -25,8 +26,8 @@ var Timer = React.createClass({
   render: function(){
     return(
         <div>
-            <h3> From Timer.js </h3>
-            <p>Time started **{this.props.timeDisplay}** seconds ago.</p>
+            <h3>Timer:</h3>
+            <p className="timeFormat">{this.props.timeDisplay}</p>
             <button type="button" className="btn" id='myButton'
                 onClick={this.handleSubmit}>Start</button>
         </div>
