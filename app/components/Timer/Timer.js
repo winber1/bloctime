@@ -12,7 +12,6 @@ var Timer = React.createClass({
     // button could be Start, Reset, Break
     var myNode = document.getElementById("myButton").childNodes[0];
     var myLabel = myNode.nodeValue;
-    console.log("myLabel:", myLabel);
 
     if(myLabel == "Start")
     { myNode.nodeValue = "Reset"; }
@@ -24,6 +23,7 @@ var Timer = React.createClass({
   },
 
   render: function(){
+console.log("Timer.render beg - timeLeft:", this.props.timeDisplay);
     return(
         <div>
             <h3>Timer:</h3>

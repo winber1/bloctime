@@ -7,7 +7,8 @@ var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
-const TIMELEFT = 3*60;  // sb 25 minutes
+const WORKTIME = 2*60;  // sb 25 minutes
+const BREAKTIME = 1*60;  // sb 5 minutes
 
 var Main = React.createClass({
 
@@ -15,8 +16,9 @@ var Main = React.createClass({
 
     getInitialState: function(){
       return{
-            timeLeft: TIMELEFT,
-            timeDisplay: this.timeFormat(TIMELEFT)
+            timeLeft: WORKTIME,
+            timeDisplay: this.timeFormat(WORKTIME),
+            onBreak: false
       }
     },
     // called bfr component mounts
@@ -50,27 +52,37 @@ var Main = React.createClass({
         this.ref.child(this.state.notes.length).set(newNote);
     },
 
-    handleTime: function(btnLabel){
-        // manage time based on button click
-        // run tick function every second
+    // manage time based on Timer.js button click
+    handleTime: function(btnLabel) {
+        //console.log("handleTime beg - timeLeft:", this.state.timeLeft);
+
+        // Handle Start click
         if( btnLabel == "Start")
         { this.timer = setInterval(this.tick, 1000); }
+
+        // Handle Reset click
         else
         {
             clearInterval(this.timer);
-            this.setState({timeLeft: TIMELEFT});
-console.log("timeLeft in handleTime - bfr timeout:", this.state.timeLeft);
-
-            this.state.timeLeft = TIMELEFT;  //??why??
-
-//setTimeout(function() { var x=1 }, 100000);
-//console.log("timeLeft in handleTime:", this.state.timeLeft);
+            if(this.state.onBreak)
+            {
+                this.setState({timeLeft: BREAKTIME});
+                this.state.timeLeft = BREAKTIME;  //??why??
+            }
+            else
+            {
+                this.setState({timeLeft: WORKTIME});
+                this.state.timeLeft = WORKTIME;
+            }
 
             this.tick();
         }
+//console.log("handleTime end - timeLeft:", this.state.timeLeft);
     },
 
+    // seconds countdown and display
     tick: function(){
+//console.log("tick beg - timeLeft:", this.state.timeLeft);
         if(this.state.timeLeft >= 0)
         {
           var t = this.state.timeLeft;
@@ -78,12 +90,29 @@ console.log("timeLeft in handleTime - bfr timeout:", this.state.timeLeft);
           this.setState({timeDisplay: this.timeFormat(t)});
         }
         else
-        { clearInterval(this.timer); }
+        {
+            document.getElementById("myButton").childNodes[0].nodeValue = "Start";
+
+            if(this.state.onBreak)
+            {
+                this.setState({timeLeft: WORKTIME} );
+                this.setState({onBreak: false} );
+            }
+            else
+            {
+                this.setState({timeLeft: BREAKTIME} );
+                this.setState({onBreak: true} );
+            }
+            this.setState({timeDisplay: this.timeFormat(this.state.timeLeft)});
+
+            clearInterval(this.timer);
+        }
+//console.log("tick end - timeLeft:", this.state.timeLeft);
     },
 
     timeFormat: function(t){
         var s = t%60;
-        if(s == 0 && (t != TIMELEFT) && (t != 0) )
+        if(s == 0 && (t != WORKTIME && t != BREAKTIME) && (t != 0) )
         {
             t -= 60;
             s = 59;
@@ -96,6 +125,7 @@ console.log("timeLeft in handleTime - bfr timeout:", this.state.timeLeft);
     },
 
     render: function(){
+console.log("render beg - timeLeft:", this.state.timeLeft);
        return(
            <div className='row'>
 
