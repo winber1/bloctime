@@ -7,19 +7,16 @@ var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
+const TIMELEFT = 25;
+
 var Main = React.createClass({
 
     mixins: [ReactFireMixin],
 
     getInitialState: function(){
       return{
-            notes: [1,2,3],
-            bio: {
-                name:'winnie e'
-            },
-            repos: ['a','b','c'],
-            timeLeft: 5,
-            timeDisplay:'5'
+            timeLeft: TIMELEFT,
+            timeDisplay:TIMELEFT.toString()
       }
     },
     // called bfr component mounts
@@ -28,6 +25,8 @@ var Main = React.createClass({
       var childRef = this.ref.child(this.props.params.username);
       //this.bindAsArray(childRef, 'notes');
       this.bindAsArray(this.ref, 'notes');
+
+      console.log("timeLeft in WillMount:", this.state.timeLeft);
     },
 
     componentWillUnmount: function(){
@@ -52,16 +51,32 @@ var Main = React.createClass({
         this.ref.child(this.state.notes.length).set(newNote);
     },
 
-    handleTime: function(){
+    handleTime: function(btnLabel){
         // manage time based on button click
         // run tick function every second
-        this.timer = setInterval(this.tick, 1000);
+        if( btnLabel == "Start")
+        { this.timer = setInterval(this.tick, 1000); }
+        else
+        {
+            clearInterval(this.timer);
+            this.setState({timeLeft: 25});
+console.log("timeLeft in handleTime - bfr timeout:", this.state.timeLeft);
+
+var t=25;
+this.setState({timeLeft: t} );
+this.state.timeLeft = 25;
+
+setTimeout(function() { var x=1 }, 100000);
+this.setState({timeLeft: 25});
+              console.log("timeLeft in handleTime:", this.state.timeLeft);
+            this.tick();
+        }
     },
     tick: function(){
         if(this.state.timeLeft > 0)
         {
 
-          var t = this.state.timeLeft-1;
+          var t = this.state.timeLeft;
 
           var m = Math.round(t/60);
           if(m < 10){ m = "0" + m; }
@@ -69,12 +84,14 @@ var Main = React.createClass({
           if(s < 10){ s = "0" + s; }
 
           var tString = m + ':' + s;
-          this.setState({timeLeft: t} );
+          this.setState({timeLeft: t-1} );
           this.setState({timeDisplay: tString});
         }
         else
         { clearInterval(this.timer); }
     },
+
+
 
     render: function(){
        return(
