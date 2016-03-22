@@ -2,9 +2,20 @@
 { overflow: hidden;
   padding-right: .5em; }
 
-.inline{
+.inline
+{ display:inline; }
 
-  display:inline;
-}
 .floatRight
-{float: right;}
+{ float: right; }
+
+.hideMe
+{  display:none; }
+
+.row
+{ width:300px; }
+
+input .form-control .input-group
+{ width:300px; }
+
+.timeFormat
+{ font-size: 2em; }
