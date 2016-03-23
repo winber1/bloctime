@@ -7,8 +7,10 @@ var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
-const WORKTIME = 10;  // sb 25 minutes
-const BREAKTIME = 4;  // sb 5 minutes
+const WORKTIME = 10;      // sb 25 minutes
+const BREAKTIME = 4;      // sb 5 minutes
+const BREAKTIME_LONG = 12;   // sb 30 minutes
+const WORK_SESSION_COUNT = 4;
 
 var Main = React.createClass({
 
@@ -18,7 +20,8 @@ var Main = React.createClass({
       return{
             timeLeft: WORKTIME,
             timeDisplay: this.timeFormat(WORKTIME),
-            onBreak: false
+            onBreak: false,
+            workCount: 0
       }
     },
     // called bfr component mounts
@@ -36,7 +39,7 @@ var Main = React.createClass({
     },
 
     onChange: function(e) {
-      this.setState({text: e.target.value});
+    //  this.setState({text: e.target.value});
     },
 
     handleSubmit: function(e) {
@@ -89,22 +92,29 @@ var Main = React.createClass({
         if(this.state.timeLeft >= 0)
         {
           var t = this.state.timeLeft;
-          this.setState({timeLeft: t-1} );
-          this.setState({timeDisplay: this.timeFormat(t)});
+          this.setState({timeLeft: t-1, timeDisplay: this.timeFormat(t)});
         }
         // out of seconds - (re)set onBreak and display
+        // handle completed work session
         else
         {
             // toggle onBreak; set time interval
             if(this.state.onBreak)
             {
-                this.setState({timeLeft: WORKTIME} );
-                this.setState({onBreak: false} );
+                this.setState({timeLeft: WORKTIME, onBreak: false} );
             }
             else
             {
-                this.setState({timeLeft: BREAKTIME} );
-                this.setState({onBreak: true} );
+                // work enough sessions to get a longer break
+                var wrkCnt = this.state.workCount + 1;
+                var brkTm = BREAKTIME;
+                if(wrkCnt == WORK_SESSION_COUNT)
+                {
+                    brkTm = BREAKTIME_LONG;
+                    wrkCnt = 0;
+                }
+
+                this.setState({timeLeft: brkTm, onBreak: true, workCount: wrkCnt} );              
             }
 
             // set display props
