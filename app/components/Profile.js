@@ -56,8 +56,9 @@ var Main = React.createClass({
     },
 
     // manage time based on Timer.js button click
-    handleTime: function(btnLabel) {
-        //console.log("handleTime beg - timeLeft:", this.state.timeLeft);
+    handleTime: function(btnLabel)
+    {
+        // console.log("handleTime beg - timeLeft:", this.state.timeLeft);
 
         // Handle Start click
         if( btnLabel == "Start")
@@ -77,16 +78,15 @@ var Main = React.createClass({
                 this.setState({timeLeft: WORKTIME});
                 this.state.timeLeft = WORKTIME;
             }
-
             this.tick();
         }
-        //console.log("handleTime end - timeLeft:", this.state.timeLeft);
+        // console.log("handleTime end - timeLeft:", this.state.timeLeft);
     },
 
     // seconds countdown and display
     tick: function()
     {
-        //console.log("tick beg - timeLeft:", this.state.timeLeft);
+        // console.log("tick beg - timeLeft:", this.state.timeLeft);
 
         // seconds countdown
         if(this.state.timeLeft >= 0)
@@ -101,7 +101,7 @@ var Main = React.createClass({
             // toggle onBreak; set time interval
             if(this.state.onBreak)
             {
-                this.setState({timeLeft: WORKTIME, onBreak: false} );
+                this.setState({timeLeft: WORKTIME, onBreak: false, timeDisplay: this.timeFormat(WORKTIME)} );
             }
             else
             {
@@ -114,16 +114,15 @@ var Main = React.createClass({
                     wrkCnt = 0;
                 }
 
-                this.setState({timeLeft: brkTm, onBreak: true, workCount: wrkCnt} );              
+                this.setState({timeLeft: brkTm, onBreak: true, workCount: wrkCnt, timeDisplay: this.timeFormat(brkTm)} );
             }
 
             // set display props
             document.getElementById("myButton").childNodes[0].nodeValue = "Start";
-            this.setState({timeDisplay: this.timeFormat(this.state.timeLeft)});
 
             clearInterval(this.timer);
         }
-        //console.log("tick end - timeLeft:", this.state.timeLeft);
+        // console.log("tick end - timeLeft:", this.state.timeLeft);
     },
 
     timeFormat: function(t){
