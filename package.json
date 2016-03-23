@@ -23,6 +23,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "buzz": "jaysalvat/buzz",
     "firebase": "^2.3.2",
     "history": "^1.13.1",
     "react": "^0.14.7",

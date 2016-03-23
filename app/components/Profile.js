@@ -6,6 +6,8 @@ var Notes = require('./Notes/Notes');
 var Timer = require('./Timer/Timer');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
+var buzz = require('buzz');
+
 
 const WORKTIME = 10;      // sb 25 minutes
 const BREAKTIME = 4;      // sb 5 minutes
@@ -21,7 +23,9 @@ var Main = React.createClass({
             timeLeft: WORKTIME,
             timeDisplay: this.timeFormat(WORKTIME),
             onBreak: false,
-            workCount: 0
+            workCount: 0,
+            mySound: new buzz.sound( "./assets/music/56895DING",
+                                     { formats: [ "mp3" ], preload: true }),
       }
     },
     // called bfr component mounts
@@ -91,8 +95,16 @@ var Main = React.createClass({
         // seconds countdown
         if(this.state.timeLeft >= 0)
         {
+          if(this.state.timeLeft == 0)
+          {
+            // ding
+            this.state.mySound.play();
+            //this.setState({timeLeft: this.state.timeLeft});
+          }
+
           var t = this.state.timeLeft;
           this.setState({timeLeft: t-1, timeDisplay: this.timeFormat(t)});
+
         }
         // out of seconds - (re)set onBreak and display
         // handle completed work session
@@ -140,7 +152,7 @@ var Main = React.createClass({
     },
 
     render: function(){
-       console.log("render beg - timeLeft:", this.state.timeLeft);
+       //console.log("render beg - timeLeft:", this.state.timeLeft);
        return(
            <div className='row'>
 
@@ -163,7 +175,8 @@ var Main = React.createClass({
                 <button>{ 'Add #' + (this.state.notes.length + 1) }</button>
                 </form>
              </div>
-           </div>
+         </div>
+
         )
    }
 });
