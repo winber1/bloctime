@@ -150,7 +150,7 @@ var Main = React.createClass({
                   addNote={this.handleAddNote} />
              </div>
 
-             <div className='col-md-8 panel panel-default'>,
+             <div className='col-md-8  timerDiv'>
                 <Timer
                   timeDisplay={this.state.timeDisplay}
                   handleTime={this.handleTime} />

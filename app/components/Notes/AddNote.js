@@ -23,7 +23,7 @@ var AddNote = React.createClass({
             <input type="text" className="form-control"
                 onChange={ this.onChange }
                 ref={this.setRef}/>
-            <button type="button" className="btn btn-default btn-sm"
+            <button type="button" className="btn btn-default btn-sm right"
                 onClick={this.handleSubmit}>Add Task</button>
         </form>
       </div>

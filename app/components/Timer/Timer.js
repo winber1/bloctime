@@ -25,10 +25,10 @@ var Timer = React.createClass({
   render: function(){
     // console.log("Timer.render beg - timeLeft:", this.props.timeDisplay);
     return(
-        <div>
+        <div className='timerDiv'>
             <kbd className="timeFormat">{this.props.timeDisplay}</kbd>
             <p/>
-            <button type="button" className="btn btn-default btn-lg" id='myButton'
+            <button type="button" className="btn btn-default btn-md btnTimer" id='myButton'
                 onClick={this.handleSubmit}>Start</button>
         </div>
     )

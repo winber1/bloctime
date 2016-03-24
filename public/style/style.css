@@ -10,3 +10,15 @@ kbd
   background-color:white;
   box-shadow:none;
 }
+
+.right
+{
+  float: right;
+  margin-bottom: 5px;
+}
+
+.btnTimer
+{ width:78px; }
+
+.timerDiv
+{ text-align: center; }
