@@ -26,9 +26,9 @@ var Timer = React.createClass({
     // console.log("Timer.render beg - timeLeft:", this.props.timeDisplay);
     return(
         <div>
-            <h3>Timer:</h3>
-            <p className="timeFormat">{this.props.timeDisplay}</p>
-            <button type="button" className="btn" id='myButton'
+            <kbd className="timeFormat">{this.props.timeDisplay}</kbd>
+            <p/>
+            <button type="button" className="btn btn-default btn-lg" id='myButton'
                 onClick={this.handleSubmit}>Start</button>
         </div>
     )

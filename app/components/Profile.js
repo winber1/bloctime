@@ -42,19 +42,6 @@ var Main = React.createClass({
       clearInterval(this.timer);  //??always or just when set??
     },
 
-    onChange: function(e) {
-    //  this.setState({text: e.target.value});
-    },
-
-    handleSubmit: function(e) {
-      e.preventDefault();
-      var idx = this.state.notes.length - 1;
-      var text = this.state.text;
-      console.log("text:", this.state.text);
-      this.ref.child(this.state.notes.length).set(this.state.text);
-      this.setState({ text: "" });
-    },
-
     handleAddNote: function(newNote){
         this.ref.child(this.state.notes.length).set(newNote);
     },
@@ -154,26 +141,19 @@ var Main = React.createClass({
     render: function(){
        //console.log("render beg - timeLeft:", this.state.timeLeft);
        return(
-           <div className='row'>
+           <div className='row' style={{ marginTop: 15}}>
 
-             <div className='row'>
-                <Timer
-                  timeDisplay={this.state.timeDisplay}
-                  handleTime={this.handleTime} />
-             </div>
-
-             <div className='row'>
+             <div className='col-md-4 well well-sm' >
                <Notes
                   username={this.props.params.username}
                   notes={this.state.notes}
                   addNote={this.handleAddNote} />
              </div>
 
-             <div className='row hideMe'>
-                <form onSubmit={ this.handleSubmit }>
-                <input onChange={ this.onChange } value={ this.state.text } />
-                <button>{ 'Add #' + (this.state.notes.length + 1) }</button>
-                </form>
+             <div className='col-md-8 panel panel-default'>,
+                <Timer
+                  timeDisplay={this.state.timeDisplay}
+                  handleTime={this.handleTime} />
              </div>
          </div>
 

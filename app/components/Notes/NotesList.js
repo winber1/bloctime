@@ -3,13 +3,13 @@ var React = require('react');
 var NotesList = React.createClass({
   render: function(){
     var notes = this.props.notes.map(function(note, index){
-      return <li className='list-group-item' key={index}> {note['.value']}</li>
+      return <tr  key={index}><td> {note['.value']}</td></tr>
     })
 
     return(
-      <ul className ='list-group'>
+      <table className="table table-striped"><tbody>
         {notes}
-      </ul>
+      </tbody></table>
     )
   }
 });

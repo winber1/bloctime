@@ -1,21 +1,12 @@
-.overflowHidden
-{ overflow: hidden;
-  padding-right: .5em; }
-
-.inline
-{ display:inline; }
-
-.floatRight
-{ float: right; }
-
-.hideMe
-{  display:none; }
-
-.row
-{ width:300px; }
-
-input .form-control .input-group
-{ width:300px; }
-
 .timeFormat
 { font-size: 2em; }
+
+.shading
+{ background-color:none;}
+
+kbd
+{
+  color:black;
+  background-color:white;
+  box-shadow:none;
+}
