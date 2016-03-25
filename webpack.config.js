@@ -1,9 +1,9 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./app/Main.js",
+    entry: "./app/components/Main.js",
     output: {
-      filename: "public/bundle.js"
+      filename: "/bundle.js"
     },
     module: {
         loaders: [
