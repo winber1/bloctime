@@ -9,11 +9,18 @@ var Notes = React.createClass({
     addNote: React.PropTypes.func.isRequired
   },
   render: function(){
+  //console.log(this.props.notes.length);
+    var sortedNotes = this.props.notes.map(function(note, id)
+      { return <NotesList key={id} data={note} /> });
+    sortedNotes.reverse();
+
     return(
         <div>
             <h3> Task history </h3>
             <AddNote username={this.props.username} addNote={this.props.addNote} />
-            <NotesList notes={this.props.notes} />
+            <table className="table table-striped"><tbody>
+            { sortedNotes }
+            </tbody></table>
         </div>
     )
   }

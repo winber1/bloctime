@@ -26,6 +26,7 @@ var Main = React.createClass({
             workCount: 0,
             mySound: new buzz.sound( "./assets/music/56895DING",
                                      { formats: [ "mp3" ], preload: true }),
+            notes: {},
       }
     },
     // called bfr component mounts
@@ -33,7 +34,6 @@ var Main = React.createClass({
       this.ref = new Firebase('https://bloctime-v2.firebaseIO.com');
       var childRef = this.ref.child(this.props.params.username);
       this.bindAsArray(this.ref, 'notes');
-
       //console.log("timeLeft in WillMount:", this.state.timeLeft);
     },
 
