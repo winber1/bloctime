@@ -1,9 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Router = require('react-router').Router;
-var routes = require('./config/routes');
+var Main = require('./components/Main');
+var Home = require('./components/Home');
 
 ReactDOM.render(
-    <Router>{routes}</Router>,
+    <Home />,
     document.getElementById('app')
 )
+
+//ReactDOM.render(<Main />, document.getElementById('app'))
