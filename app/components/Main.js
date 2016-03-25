@@ -1,10 +1,14 @@
 var React = require('react');
+var Home = require('./Home');
 //var ReactDOM = require('react-dom')
 
 var Main = React.createClass({
     render: function(){
         return (
-          <div>Hello worldzz</div>
+          <div>Hello worldzz
+          <Home />
+          </div>
+
         )
     }
 });
