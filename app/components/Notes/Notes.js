@@ -4,7 +4,6 @@ var AddNote = require('./AddNote');
 
 var Notes = React.createClass({
   propTypes: {
-    username: React.PropTypes.string.isRequired,
     notes: React.PropTypes.array.isRequired,
     addNote: React.PropTypes.func.isRequired
   },
@@ -17,7 +16,7 @@ var Notes = React.createClass({
     return(
         <div>
             <h3> Task history </h3>
-            <AddNote username={this.props.username} addNote={this.props.addNote} />
+            <AddNote addNote={this.props.addNote} />
             <table className="table table-striped"><tbody>
             { sortedNotes }
             </tbody></table>

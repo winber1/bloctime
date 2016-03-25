@@ -32,7 +32,6 @@ var Main = React.createClass({
     // called bfr component mounts
     componentWillMount: function(){
       this.ref = new Firebase('https://bloctime-v2.firebaseIO.com');
-      var childRef = this.ref.child(this.props.params.username);
       this.bindAsArray(this.ref, 'notes');
       //console.log("timeLeft in WillMount:", this.state.timeLeft);
     },
@@ -145,7 +144,6 @@ var Main = React.createClass({
 
              <div className='col-md-4 well well-sm' >
                <Notes
-                  username={this.props.params.username}
                   notes={this.state.notes}
                   addNote={this.handleAddNote} />
              </div>
