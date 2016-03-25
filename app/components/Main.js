@@ -5,7 +5,7 @@ var Home = require('./Home');
 var Main = React.createClass({
     render: function(){
         return (
-          <div>Hello worldzz
+          <div>Hello worldzzxxx
           <Home />
           </div>
 
